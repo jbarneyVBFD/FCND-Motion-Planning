@@ -70,15 +70,22 @@ east offsets for each. I then updated the grid_start variable to contain grid_st
 #### 4. Set grid goal position from geodetic coords
 This step is to add flexibility to the desired goal location. Should be able to choose any (lat, lon) within the map and have it rendered to a goal location on the grid.
 
-
+After entering the latlong into the variable latlonG, I used the global_to_local function, from udacidrone.frame_utils, to convert to a north, east down coordinate. I then set grid_goal to the difference of the north and east coordinates against the north and east offsets while casting them as integers.  
 
 #### 5. Modify A* to include diagonal motion (or replace A* altogether)
 Minimal requirement here is to modify the code in planning_utils() to update the A* implementation to include diagonal motions on the grid that have a cost of sqrt(2), but more creative solutions are welcome. Explain the code you used to accomplish this step.
 
+I added the four diagonal directions to the class enumeration Action, each with the cost of the sqrt(2).
+I modified the function valid_actions by adding the following four if statements, NE, NW, SE, and SW; to check to see if the diagonal motion is on the map and not an obstacle.
+
 #### 6. Cull waypoints 
 For this step you can use a collinearity test or ray tracing method like Bresenham. The idea is simply to prune your path of unnecessary waypoints. Explain the code you used to accomplish this step.
 
+I defined a point function that converts the point into a numpy array of the waypoint coordinate reshaped to add an extra dimension to make concatenation easier in the function collinearity. 
 
+I then defined the function collinearity to take in 3 waypoints and an epsilon, then convert the waypoints to numpy arrays and add the extra dimension through the point function; then concatenate them into a matrix. I then found the determinate of the three points by using the numpy linalg function det. Next I compared the determinate to the epsilon returning a boolean.
+
+In the prunePath I first checked to see if the path was not empty. Next I started a while loop to loop through the length of the path, three waypoints at a time, calling the collinearity function through an if statement checking to see if the three waypoints passed in returned true in the collinearity function. If they did I removed the middle waypoint. If they returned false, I increased the index value to move further along in the while loop. Once the while loop reached the end of the path, I returned the path.
 
 ### Execute the flight
 #### 1. Does it work?
