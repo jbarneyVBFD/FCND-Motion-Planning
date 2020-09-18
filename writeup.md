@@ -29,6 +29,8 @@ You're reading it! Below I describe how I addressed each rubric point and where 
 #### 1. Explain the functionality of what's provided in `motion_planning.py` and `planning_utils.py`
 These scripts contain a basic planning implementation that includes...
 
+The path is planned by the programmer in the function calculate_box in the BackyardFlyer class. In the MotionPlanning class the path is planned in the plan_path function. Also in the plan_path function, obstacles are read into the map through the colliders.csv file. The file planning_utils.py offers functions that help to create the grid and plan the path. The function a_star checks the current node for adjacent grid cells and uses the function valid_actions to check the adjacent cells for obstacles and edges of the map. The function a_star then assigns a cost to each of the grid cells leftover from valid_actions. The PriorityQueue is then used to select the adjacent grid cell with the lowest cost to be the new current_node. When the PriorityQueue returns the goal, "Found a path" is printed, the boolean found is set to true, and break is called to exit the while loop.
+
 And here's a lovely image of my results (ok this image has nothing to do with it, but it's a nice example of how to include images in your writeup!)
 ![Top Down View](./misc/high_up.png)
 
