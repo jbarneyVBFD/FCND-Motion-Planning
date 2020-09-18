@@ -1,5 +1,4 @@
 # FCND - 3D Motion Planning
-![Quad Image](./misc/enroute.png)
 
 
 
@@ -44,10 +43,6 @@ python motion_planning.py
 
 You should see the quad fly a jerky path of waypoints to the northeast for about 10 m then land.  What's going on here? Your first task in this project is to explain what's different about `motion_planning.py` from the `backyard_flyer_solution.py` script, and how the functions provided in `planning_utils.py` work. 
 
-### Step 6 Answer:
-
-The path is planned by the programmer in the function calculate_box in the BackyardFlyer class. In the MotionPlanning class the path is planned in the plan_path function. Also in the plan_path function, obstacles are read into the map through the colliders.csv file. The file planning_utils.py offers functions that help to create the grid and plan the path. The function a_star checks the current node for adjacent grid cells and uses the function valid_actions to check the adjacent cells for obstacles and edges of the map. The function a_star then assigns a cost to each of the grid cells leftover from valid_actions. The PriorityQueue is then used to select the adjacent grid cell with the lowest cost to be the new current_node. When the PriorityQueue returns the goal, "Found a path" is printed, the boolean found is set to true, and break is called to exit the while loop. 
-
 ### Step 7: Write your planner
 
 Your planning algorithm is going to look something like the following:
@@ -87,6 +82,5 @@ wp2[3] = np.arctan2((wp2[1]-wp1[1]), (wp2[0]-wp1[0]))
 This may not be completely intuitive, but this will yield a yaw angle that is positive counterclockwise about a z-axis (down) axis that points downward.
 
 Put all of these together and make up your own crazy paths to fly! Can you fly a double helix?? 
-![Double Helix](./misc/double_helix.gif)
 
 Ok flying a double helix might seem like a silly idea, but imagine you are an autonomous first responder vehicle. You need to first fly to a particular building or location, then fly a reconnaissance pattern to survey the scene! Give it a try!
